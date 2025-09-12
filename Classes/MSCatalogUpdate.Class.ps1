@@ -2,6 +2,7 @@ class MSCatalogUpdate {
     [string] $Title
     [string] $Products
     [string] $Classification
+    [string] $Architecture
     [datetime] $LastUpdated
     [string] $Version
     [string] $Size

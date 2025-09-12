@@ -409,6 +409,10 @@ function Get-MSCatalogUpdate {
                 Write-Warning "Result limit of $MaxResults reached. Please refine your search criteria."
             }
 
+            foreach ($Update in $Updates){
+                $Update.Architecture = $Architecture
+            }
+
             # Format and return results
             switch ($Format) {
                 "Default" { 

@@ -1,7 +1,7 @@
 class MSUpdateResponse {
     [string] $Title
 	[string[]] $Id
-	[string[]] $Architecture
+	[string] $Architecture
 	[string[]] $Language
 	[string] $Hotfix
 	[string] $Description
@@ -30,11 +30,6 @@ class MSUpdateResponse {
         $spanNode = $divNode.SelectSingleNode(".//span")
         $spanNode.ParentNode.RemoveChild($spanNode)
         $this.Id = ($divNode.InnerText -replace '\r\n\s*,\s*\r\n\s*', ',' -replace '\r\n\s*', '') -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
-
-        $divNode = $HtmlDoc.GetElementbyId("archDiv")
-        $spanNode = $divNode.SelectSingleNode(".//span")
-        $spanNode.ParentNode.RemoveChild($spanNode)
-		$this.Architecture = ($divNode.InnerText -replace '\r\n\s*,\s*\r\n\s*', ',' -replace '\r\n\s*', '') -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
 
         $divNode = $HtmlDoc.GetElementbyId("languagesDiv")
         $spanNode = $divNode.SelectSingleNode(".//span")

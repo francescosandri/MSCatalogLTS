@@ -1,17 +1,24 @@
 function Update-MSCatalogUpdate {
+    [CmdletBinding()]
     param (
         [Parameter(
             Mandatory = $true, 
-            Position = 0, 
-            ParameterSetName = "Guid",
+            Position = 0,
             ValueFromPipeline=$true,
             ValueFromPipelineByPropertyName=$true)]
         [String] $Guid,
 
+        [Parameter(
+            Mandatory = $true, 
+            Position = 0,
+            ValueFromPipeline=$true,
+            ValueFromPipelineByPropertyName=$true)]
+        [String] $Architecture,
+
         [Parameter( 
-            Position = 1, 
-            ParameterSetName = "Destination")]
-        [String] $Destination = "C:\\Temp\\TEST"
+            Mandatory = $true,
+            Position = 1)]
+        [String] $Path
     )
     Process {
         
@@ -23,7 +30,7 @@ function Update-MSCatalogUpdate {
 
         $CleanOutFile = $Guid + ".json"
 
-        $outfile = Join-Path -Path $Destination -ChildPath $CleanOutFile
+        $outfile = Join-Path -Path $Path -ChildPath $CleanOutFile
 
         # $ProgressPreference = 'SilentlyContinue'
 
@@ -34,6 +41,8 @@ function Update-MSCatalogUpdate {
         foreach ($Link in $Links) {
             $Res.Link.Add($Link.URL)
         }    
+        
+        $Res.Architecture = $Architecture
 
         $Res | Convert-ForJson | ConvertTo-Json | Out-File $outfile
     }    

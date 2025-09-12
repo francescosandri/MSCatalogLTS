@@ -8,7 +8,7 @@ function Convert-ForJson {
         $jsonReady = [PSCustomObject]@{
             Title = $Update.Title
             Id = if ($Update.Id.Count -eq 0) {""} elseif ($Update.Id.Count -eq 1) { $Update.Id[0] } else { $Update.Id }
-            Architecture = if ($Update.Architecture.Count -eq 0) {""} elseif ($Update.Architecture.Count -eq 1) { $Update.Architecture[0] } else { $Update.Architecture }
+            Architecture = $Update.Architecture
             Language = if ($Update.Language.Count -eq 0) {""} elseif ($Update.Language.Count -eq 1) { $Update.Language[0] } else { $Update.Language }
             Hotfix = $Update.Hotfix
             Description = $Update.Description
