@@ -403,8 +403,8 @@ function Get-MSCatalogUpdate {
             }
 
             # Display result summary
-            Write-Host "`nSearch completed for: $searchQuery"
-            Write-Host "Found $($Updates.Count) updates"
+            Write-Verbose "`nSearch completed for: $searchQuery"
+            Write-Verbose "Found $($Updates.Count) updates"
             if ($Updates.Count -ge $MaxResults) {
                 Write-Warning "Result limit of $MaxResults reached. Please refine your search criteria."
             }
