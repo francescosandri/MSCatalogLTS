@@ -33,16 +33,22 @@ function Update-MSCatalogUpdate {
         $outfile = Join-Path -Path $Path -ChildPath $CleanOutFile
 
         # $ProgressPreference = 'SilentlyContinue'
+        
+        Write-Verbose "`nDownloading manifest: $Guid"
 
         # Initialize update request
         $Uri = "https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=$Guid"
         $Res = Invoke-UpdateRequest -Uri $Uri
+
+        Write-Verbose "`nManifest downloaded"
 
         foreach ($Link in $Links) {
             $Res.Link.Add($Link.URL)
         }    
         
         $Res.Architecture = $Architecture
+
+        Write-Output "`nWriting manifest : $CleanOutFile"
 
         $Res | Convert-ForJson | ConvertTo-Json | Out-File $outfile
     }    
