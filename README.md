@@ -106,13 +106,13 @@ Update-MSCatalogUpdate
 In this example only cumulative updates for Windows 11 25H2 x64 non-superseded manifests are saved in the OSD cache folder
 
 ```powershell
-Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.Name -eq 'Windows 11' } | Select-Object -First 1 -ExpandProperty FullName)
+Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.FullName -like "*\cache\archive-osd-manifests\mscatalog\Windows 11" } | Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName)
 Remove-Item -Path ".\*" -Force
 Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
 ```
 Otherwise in a single command:
 ```powershell
-Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.Name -eq 'Windows 11' } | Select-Object -First 1 -ExpandProperty FullName) && Remove-Item -Path ".\*" -Force && Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
+Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.FullName -like "*\cache\archive-osd-manifests\mscatalog\Windows 11" } | Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName) && Remove-Item -Path ".\*" -Force && Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
 ```
 ## HtmlAgilityPack
 
