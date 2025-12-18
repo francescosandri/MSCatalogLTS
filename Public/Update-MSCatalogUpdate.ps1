@@ -18,7 +18,11 @@ function Update-MSCatalogUpdate {
         [Parameter( 
             Mandatory = $true,
             Position = 1)]
-        [String] $Path
+        [String] $Path,
+
+        [Parameter( 
+            Mandatory = $false)]
+        [Switch] $ExcludeSuperseded
     )
     Process {
         
@@ -47,6 +51,8 @@ function Update-MSCatalogUpdate {
         }    
         
         $Res.Architecture = $Architecture
+        
+        if ($ExcludeSuperseded -and $Res.SupersededBy.Count -ne 1) {return}
 
         Write-Output "`nWriting manifest : $CleanOutFile"
 
