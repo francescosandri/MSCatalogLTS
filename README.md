@@ -10,12 +10,14 @@ It is cross-platform and runs on both Desktop and Core versions of PowerShell.
 Import the module MSCatalogLTS direct from PSgallery:
 
 ``` powershell
-Install-Module -Name MSCatalogLTS
+Invoke-WebRequest -Uri "https://github.com/francescosandri/MSCatalogLTS/archive/refs/heads/main.zip" -OutFile "$env:TEMP\MSCatalogLTS.zip"; Expand-Archive "$env:TEMP\MSCatalogLTS.zip" -DestinationPath "$env:USERPROFILE\Documents\PowerShell\Modules"
+Import-Module "$env:USERPROFILE\Documents\PowerShell\Modules\MSCatalogLTS-main\MSCatalogLTS.psm1"
 ```
 
 If you already have the module installed, make sure it is the latest version:
 ``` powershell
-Update-Module -Name MSCatalogLTS
+Invoke-WebRequest -Uri "https://github.com/francescosandri/MSCatalogLTS/archive/refs/heads/main.zip" -OutFile "$env:TEMP\MSCatalogLTS.zip"; Expand-Archive "$env:TEMP\MSCatalogLTS.zip" -DestinationPath "$env:USERPROFILE\Documents\PowerShell\Modules"
+Import-Module "$env:USERPROFILE\Documents\PowerShell\Modules\MSCatalogLTS-main\MSCatalogLTS.psm1"
 ```
 ## Get-MSCatalogUpdate
 
