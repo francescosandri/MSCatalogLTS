@@ -91,7 +91,29 @@ By default, the worksheet name in the Excel file will be named "Updates". Howeve
 ```powershell
 Save-MSCatalogOutput -Update $update -WorksheetName "08_2024_Updates" -Destination "C:\Temp\2024_Updates.xlsx"
 ```
+## Update-MSCatalogUpdate
 
+The Update-MSCatalogUpdate function writes the outcome of command Get-MSCatalogUpdate to a specific folder.
+The format is the XML used by OSD module 
+
+```powershell
+Update-MSCatalogUpdate
+-Path                  Specify the path where to save manifests
+-ExcludeSuperseded     Exclude superseded updates
+```
+## Example
+
+In this example only cumulative updates for Windows 11 25H2 x64 non-superseded manifests are saved in the OSD cache folder
+
+```powershell
+Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.Name -eq 'Windows 11' } | Select-Object -First 1 -ExpandProperty FullName)
+Remove-Item -Path ".\*" -Force
+Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
+```
+Otherwise in a single command:
+```powershell
+Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.Name -eq 'Windows 11' } | Select-Object -First 1 -ExpandProperty FullName) && Remove-Item -Path ".\*" -Force && Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
+```
 ## HtmlAgilityPack
 
 MSCatalogLTS uses the HtmlAgilityPack library for HTML parsing to ensure cross-platform compatibility. This avoids reliance on the Windows-only ParsedHtml property of the Invoke-WebRequest CmdLet.
