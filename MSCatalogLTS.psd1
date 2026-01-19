@@ -17,16 +17,16 @@
     GUID = '721ac2a2-e4b6-4948-9c22-6ad2a52c0de6'
 
     # Author of this module
-    Author = 'Marco-online'
+    Author = 'francescosandri'
 
     # Company or vendor of this module
     CompanyName = ''
 
     # Copyright statement for this module
-    Copyright = '(c) 2024 Marco-online All rights reserved.'
+    Copyright = '(c) 2026 francescosandri All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'MSCatalogLTS is a Long-term support module for searching and downloading Windows updates'
+    Description = 'MSCatalogLTS is a Long-term support module for searching and downloading Windows updates with integrations with OSD'
 
     # Minimum version of the Windows PowerShell engine required by this module
     # PowerShellVersion = ''
@@ -71,7 +71,8 @@
         'Get-MSCatalogUpdate',
         'Save-MSCatalogUpdate',
         'Save-MSCatalogOutput',
-        'Update-MSCatalogUpdate'
+        'Update-MSCatalogUpdate',
+		'Clean-OSDDownloadedUpdate'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -104,7 +105,7 @@
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/Marco-online/MSCatalogLTS'
+            ProjectUri = 'https://github.com/francescosandri/MSCatalogLTS'
 
             # A URL to an icon representing this module.
             # IconUri = ''
