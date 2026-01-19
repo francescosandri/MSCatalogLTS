@@ -94,13 +94,18 @@ Save-MSCatalogOutput -Update $update -WorksheetName "08_2024_Updates" -Destinati
 ## Update-MSCatalogUpdate
 
 The Update-MSCatalogUpdate function writes the outcome of command Get-MSCatalogUpdate to a specific folder.
-The format is the XML used by OSD module 
+The format is the JSON used by OSD module 
 
 ```powershell
 Update-MSCatalogUpdate
 -Path                  Specify the path where to save manifests
 -ExcludeSuperseded     Exclude superseded updates
 ```
+## Clean-OSDDownloadedUpdate
+
+The Clean-OSDDownloadedUpdate function clean OSD downloaded updates folder.
+The function gets JSON manifest files from the current directory
+
 ## Example
 
 In this example only cumulative updates for Windows 11 25H2 x64 non-superseded manifests are saved in the OSD cache folder
@@ -109,10 +114,11 @@ In this example only cumulative updates for Windows 11 25H2 x64 non-superseded m
 Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.FullName -like "*\cache\archive-osd-manifests\mscatalog\Windows 11" } | Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName)
 Remove-Item -Path ".\*" -Force
 Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
+Clean-OSDDownloadedUpdate
 ```
 Otherwise in a single command:
 ```powershell
-Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.FullName -like "*\cache\archive-osd-manifests\mscatalog\Windows 11" } | Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName) && Remove-Item -Path ".\*" -Force && Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded
+Set-Location -Path (Get-ChildItem -Path "$env:USERPROFILE\Documents\PowerShell\Modules\OSD" -Directory -Recurse -ErrorAction SilentlyContinue -Force | Where-Object { $_.FullName -like "*\cache\archive-osd-manifests\mscatalog\Windows 11" } | Sort-Object FullName | Select-Object -Last 1 -ExpandProperty FullName) && Remove-Item -Path ".\*" -Force && Get-MSCatalogUpdate -AllPages -Architecture "x64" -OperatingSystem "Windows 11" -Version "25H2" -UpdateType "Cumulative Updates" -Properties "Guid","Architecture" | Update-MSCatalogUpdate -Path ".\" -ExcludeSuperseded && Clean-OSDDownloadedUpdate
 ```
 ## HtmlAgilityPack
 
