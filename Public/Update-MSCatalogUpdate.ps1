@@ -52,7 +52,7 @@ function Update-MSCatalogUpdate {
         
         $Res.Architecture = $Architecture
         
-        if ($ExcludeSuperseded -and $Res.SupersededBy -ne "n/a") {return}
+        if ($ExcludeSuperseded -and $Res.SupersededBy -ne "n/a" -and ($Res.SupersededBy -split "\r?\n" | Where-Object { $_.Trim() -and $_ -notmatch "Preview" })) {return}
 
         Write-Output "`nWriting manifest : $CleanOutFile"
 
